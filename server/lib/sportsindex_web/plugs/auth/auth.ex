@@ -9,18 +9,21 @@ defmodule SportsindexWeb.Auth do
 
   def call(conn, _opts) do
     current_user = Guardian.Plug.current_resource(conn)
-    jwt = Guardian.Plug.current_token(conn)
 
     conn
-    |> assign(:current_user, current_user)
-    |> assign(:current_token, jwt)
+    |> put_resource(current_user)
   end
 
   def login(conn, user) do
-    new_conn = Guardian.Plug.sign_in(conn, user)
-    jwt = Guardian.Plug.current_token(new_conn)
+    conn
+    |> Guardian.Plug.sign_in(conn, user)
+    |> put_resource(user)
+  end
 
-    new_conn
+  def put_resource(conn, user) do
+    jwt = Guardian.Plug.current_token(conn)
+
+    conn
     |> assign(:current_user, user)
     |> assign(:current_token, jwt)
   end

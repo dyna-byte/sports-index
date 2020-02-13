@@ -22,6 +22,12 @@ defmodule Sportsindex.Accounts.Credential do
     |> validate_changeset()
   end
 
+  def changeset(credential, attrs, user) do
+    credential
+    |> changeset(attrs)
+    |> put_assoc(:user, user)
+  end
+
   def validate_changeset(struct) do
     struct
     |> transform()

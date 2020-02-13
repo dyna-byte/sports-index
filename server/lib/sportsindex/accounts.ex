@@ -57,6 +57,17 @@ defmodule Sportsindex.Accounts do
   end
 
   @doc """
+  Create a User and Credential and return the user
+  """
+  def create_user_creds(attrs \\ %{}) do
+    Repo.transaction(fn ->
+      {:ok, user} = create_user(attrs)
+      {:ok, _creds} = create_credential(attrs, user)
+      user
+    end)
+  end
+
+  @doc """
   Updates a user.
 
   ## Examples
@@ -106,35 +117,6 @@ defmodule Sportsindex.Accounts do
   alias Sportsindex.Accounts.Credential
 
   @doc """
-  Returns the list of credentials.
-
-  ## Examples
-
-      iex> list_credentials()
-      [%Credential{}, ...]
-
-  """
-  def list_credentials do
-    Repo.all(Credential)
-  end
-
-  @doc """
-  Gets a single credential.
-
-  Raises `Ecto.NoResultsError` if the Credential does not exist.
-
-  ## Examples
-
-      iex> get_credential!(123)
-      %Credential{}
-
-      iex> get_credential!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_credential!(id), do: Repo.get!(Credential, id)
-
-  @doc """
   Creates a credential.
 
   ## Examples
@@ -146,9 +128,9 @@ defmodule Sportsindex.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_credential(attrs \\ %{}) do
+  def create_credential(attrs \\ %{}, user) do
     %Credential{}
-    |> Credential.changeset(attrs)
+    |> Credential.changeset(attrs, user)
     |> Repo.insert()
   end
 
@@ -199,6 +181,9 @@ defmodule Sportsindex.Accounts do
     Credential.changeset(credential, %{})
   end
 
+  @doc """
+  Verify a credential by email/pass and return `{:ok, user}` in case of success
+  """
   def get_user_by_credential(email, pass) do
     with {:ok, creds } <- Repo.get_by(Credential, email: String.downcase(email)) do
       creds = creds
