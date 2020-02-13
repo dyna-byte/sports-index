@@ -25,6 +25,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Guardian configuration
+config :my_app, SportsindexWeb.Auth.Guardian,
+       issuer: "sportsindex",
+       secret_key: "tH9MC7pjgNhkFClYALPaD/neaMmRok0KeMzuwRwtcmR0tFFnzZsVJ7KkBKE+kujg"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
