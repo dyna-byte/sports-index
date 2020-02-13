@@ -2,6 +2,8 @@ defmodule Sportsindex.Trades.Trade do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @attrs [:price, :quantity, :user_id, :asset_id, :from_order_id, :to_order_id]
+
   schema "trades" do
     field :price, :integer
     field :quantity, :integer
@@ -14,10 +16,9 @@ defmodule Sportsindex.Trades.Trade do
     timestamps()
   end
 
-  @doc false
   def changeset(trade, attrs) do
     trade
-    |> cast(attrs, [:price, :quantity, :user_id, :asset_id, :from_order_id, :to_order_id])
-    |> validate_required([:price, :quantity, :user_id, :asset_id, :from_order_id, :to_order_id])
+    |> cast(attrs, @attrs)
+    |> validate_required(@attrs)
   end
 end
