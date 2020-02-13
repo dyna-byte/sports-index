@@ -26,7 +26,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Guardian configuration
-config :my_app, SportsindexWeb.Auth.Guardian,
+config :sportsindex, SportsindexWeb.Auth.Guardian,
        issuer: "sportsindex",
        secret_key: "tH9MC7pjgNhkFClYALPaD/neaMmRok0KeMzuwRwtcmR0tFFnzZsVJ7KkBKE+kujg"
 
