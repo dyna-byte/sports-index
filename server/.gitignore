@@ -28,3 +28,7 @@ sportsindex-*.tar
 /priv/static/
 
 .elixir_ls/
+
+# IDEA IDE files
+.idea
+sportsindex.iml
