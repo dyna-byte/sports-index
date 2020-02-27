@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../reducers';
+import { logout } from '../../actions/session';
 import { AppBar, makeStyles, Toolbar, IconButton,
    Typography, Button, Drawer, List, ListItem,
     ListItemIcon, ListItemText } from '@material-ui/core';
@@ -43,6 +44,7 @@ const Navbar = (props) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open)
+  const handleLogout = () => props.logout();
 
   return (<nav className={classes.root}>
     <AppBar position="static" className={classes.appBar}>
@@ -55,7 +57,9 @@ const Navbar = (props) => {
           Sports Index
         </Typography>
         {isAuthenticated
-        ? <Button color="inherit">Logout { currentUser.name } </Button>
+        ? <Button color="inherit" onClick={handleLogout}>
+            Logout { currentUser.name } 
+          </Button>
         : <Link to="/login">
             <Button variant="contained" color="inherit">Login</Button> 
           </Link>
@@ -88,5 +92,5 @@ export default connect(
     isAuthenticated: session.isAuthenticated,
     currentUser: session.currentUser
   }),
-  null,
+  { logout },
 )(Navbar);

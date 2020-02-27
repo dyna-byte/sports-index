@@ -21,6 +21,7 @@ function shimStore() {
 
   return {
     getItem: (key) => store[key],
-    setItem: (key, data) => store[key] = data
+    setItem: (key, data) => store[key] = data,
+    removeItem: (key) => delete store[key]
   }
 }

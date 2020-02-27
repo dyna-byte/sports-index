@@ -1,6 +1,6 @@
 import actionTypes from "../actionTypes";
 import api from "./api";
-import { setToken } from "../tools/sessionStore";
+import { setToken, removeToken } from "../tools/sessionStore";
 
 /**
  * Log the user in
@@ -23,18 +23,18 @@ export function login(data) {
 export function logout() {
   return dispatch => {
     return api.delete('api/sessions')
-      .then(async (response) => {
+      .then(async () => {
         setCurrentUser(null);
-        dispatch({ type: actionTypes.LOGIN, response: response.data })
+        dispatch({ type: actionTypes.LOGOUT })
       }).catch((err) => {
-        dispatch({ type: actionTypes.LOGIN_FAILURE })
+        console.error("Failed to log out", err)
       });
   }
 }
 
 function setCurrentUser(response) {
-  if (response)
+  if (response && response.meta && response.meta.token)
     setToken(response.meta.token);
   else
-    setToken(undefined);
+    removeToken();
 }
