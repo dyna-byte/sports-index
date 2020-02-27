@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../reducers';
-import { AppBar, makeStyles, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { AppBar, makeStyles, Toolbar, IconButton,
+   Typography, Button, Drawer, List, ListItem,
+    ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 
