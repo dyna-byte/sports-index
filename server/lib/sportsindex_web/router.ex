@@ -28,7 +28,6 @@ defmodule SportsindexWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
   scope "/api", SportsindexWeb do
     pipe_through :api
 
