@@ -4,8 +4,11 @@ import { IStore } from '../../reducers';
 import { AppBar, makeStyles, Toolbar, IconButton,
    Typography, Button, Drawer, List, ListItem,
     ListItemIcon, ListItemText } from '@material-ui/core';
+
+// Icons
 import MenuIcon from '@material-ui/icons/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,18 +31,14 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
   },
   drawerClose: {
-    position: 'relative',
     whiteSpace: 'nowrap',
     overflowX: 'hidden',
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9)
-    }
+    width: theme.spacing(30)
   }
 }));
 const Navbar = (props) => {
   const classes = useStyles();
-  const { isAuthenticated } = props;
+  const { isAuthenticated, currentUser } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open)
@@ -55,12 +54,12 @@ const Navbar = (props) => {
           Sports Index
         </Typography>
         {isAuthenticated
-        ? <Button color="inherit">Logout</Button>
+        ? <Button color="inherit">Logout { currentUser.name } </Button>
         : <Button color="inherit">Login</Button> 
         }
       </Toolbar>
     </AppBar>
-    <Drawer variant="permanent" open={open} className={classes.drawerClose}>
+    <Drawer variant="permanent" open={open} classes={{paper: classes.drawerClose}}>
       <div className={classes.toolbarIcon}></div>
       <List>
         <ListItem button>
@@ -68,6 +67,13 @@ const Navbar = (props) => {
             <DashboardIcon />
           </ListItemIcon>
             <ListItemText primary="Assets" />
+        </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <AccountBalanceIcon />
+          </ListItemIcon>
+            <ListItemText primary="Balance" />
         </ListItem>
       </List>
     </Drawer>
