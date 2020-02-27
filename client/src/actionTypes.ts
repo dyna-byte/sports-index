@@ -1,5 +1,7 @@
-const actionTypes: {[type: string]: string} = {
+const actionTypes = {
   LOGIN: "",
+  LOGIN_REQUEST: "",
+  LOGIN_FAILURE: "",
   LOGOUT: ""
 }
 

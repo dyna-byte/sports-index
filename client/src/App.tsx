@@ -3,6 +3,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './containers/Home';
 import Navbar from './components/layout/Navbar';
 import { CssBaseline, Container, withStyles } from '@material-ui/core';
+import { IStore } from './reducers';
+import { connect } from 'react-redux';
+import Login from './containers/Login';
+import RedirectAuthenticated from './components/auth/RedirectAuthenticated';
 
 const styles = theme => ({
   container: {
@@ -13,7 +17,8 @@ const styles = theme => ({
 class App extends React.Component<any, any> {
 
   render() {
-    const { classes } = this.props;
+    const { classes, isAuthenticated, willAuthenticate } = this.props;
+    const authProps = { isAuthenticated, willAuthenticate };
     return (
       <BrowserRouter>
         <Navbar />
@@ -21,6 +26,7 @@ class App extends React.Component<any, any> {
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
             <Route exact path="/" component={Home} />
+            <RedirectAuthenticated exact path="/login" component={Login} {...authProps }/>
           </Switch>
         </Container>
       </BrowserRouter>
@@ -28,4 +34,9 @@ class App extends React.Component<any, any> {
   }
 }
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(connect(
+  ({session}: IStore) => ({
+    isAuthenticated: session.isAuthenticated,
+    willAuthenticate: session.willAuthenticate
+  })
+)(App));

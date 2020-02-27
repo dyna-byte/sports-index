@@ -9,6 +9,7 @@ import { AppBar, makeStyles, Toolbar, IconButton,
 import MenuIcon from '@material-ui/icons/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,7 +56,9 @@ const Navbar = (props) => {
         </Typography>
         {isAuthenticated
         ? <Button color="inherit">Logout { currentUser.name } </Button>
-        : <Button color="inherit">Login</Button> 
+        : <Link to="/login">
+            <Button variant="contained" color="inherit">Login</Button> 
+          </Link>
         }
       </Toolbar>
     </AppBar>
