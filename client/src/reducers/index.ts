@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import session from './session';
+import session, { ISessionStore } from './session';
 
 const reducers = combineReducers({
   session
@@ -10,5 +10,5 @@ export default function (state, action) {
 }
 
 export interface IStore { 
-  session: any
+  session: ISessionStore
 }

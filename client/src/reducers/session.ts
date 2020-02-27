@@ -1,11 +1,12 @@
 import actionTypes from '../actionTypes';
 
-const initialState = {
+const initialState: ISessionStore = {
   isAuthenticated: false,
+  willAuthenticate: true,
   currentUser: {}
 };
 
-export default function(state = initialState, action) {
+export default function sessionReducer(state = initialState, action) {
   switch(action.type) {
     case actionTypes.LOGIN:
       return {
@@ -23,4 +24,12 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
+}
+
+export interface ISessionStore {
+  isAuthenticated: boolean;
+  willAuthenticate: boolean
+  currentUser: {
+    name: string
+  } | {};
 }
