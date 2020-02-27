@@ -1,5 +1,6 @@
 defmodule SportsindexWeb.Router do
   use SportsindexWeb, :router
+  alias SportsindexWeb.Auth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -11,6 +12,14 @@ defmodule SportsindexWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug Auth
+  end
+
+  pipeline :authenticated do
+    import Auth, only: [authenticate: 2]
+    plug :authenticate
   end
 
   scope "/", SportsindexWeb do
@@ -20,7 +29,15 @@ defmodule SportsindexWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SportsindexWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SportsindexWeb do
+    pipe_through :api
+
+    post "/sessions", SessionController, :create
+    post "/users", UserController, :create
+
+    # Authenticated users only
+    pipe_through :authenticated
+    delete "/sessions", SessionController, :delete
+    get "/sessions/refresh", SessionController, :refresh
+  end
 end
