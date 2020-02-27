@@ -29,7 +29,7 @@ defmodule SportsindexWeb.SessionController do
     end
   end
 
-  def refresh(conn) do
+  def refresh(conn, _opts) do
     jwt = Auth.refresh(conn)
     user = conn.assigns.current_user
 
@@ -37,8 +37,9 @@ defmodule SportsindexWeb.SessionController do
     |> render("show.json", user: user, jwt: jwt)
   end
 
-  def delete(conn) do
+  def delete(conn, _opts) do
     conn
     |> Auth.logout()
+    |> send_resp(:ok, "{}")
   end
 end
