@@ -2,7 +2,7 @@ defmodule SportsindexWeb.Auth.Guardian do
   use Guardian, otp_app: :sportsindex
   alias Sportsindex.Accounts.User
 
-  def subject_for_token(%User{} = user, _claims) do
+  def subject_for_token(user, _claims) do
     sub = to_string(user.id)
     {:ok, sub}
   end
@@ -20,5 +20,16 @@ defmodule SportsindexWeb.Auth.Guardian do
   end
   def resource_from_claims(_claims) do
     {:error, :reason_for_error}
+  end
+end
+
+defmodule SportsindexWeb.Auth.GuardianErrorHandler do
+  import Plug.Conn
+
+  @behaviour Guardian.Plug.ErrorHandler
+
+  @impl Guardian.Plug.ErrorHandler
+  def auth_error(conn, {type, _reason}, _opts) do
+    send_resp(conn, 401, "")
   end
 end

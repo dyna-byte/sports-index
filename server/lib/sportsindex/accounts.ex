@@ -1,4 +1,5 @@
 defmodule Sportsindex.Accounts do
+  import Logger
   @moduledoc """
   The Accounts context.
   """
@@ -185,18 +186,18 @@ defmodule Sportsindex.Accounts do
   Verify a credential by email/pass and return `{:ok, user}` in case of success
   """
   def get_user_by_credential(email, pass) do
-    with {:ok, creds } <- Repo.get_by(Credential, email: String.downcase(email)) do
+    with %Credential{} = creds <- Repo.get_by(Credential, email: String.downcase(email)) do
       creds = creds
       |> Repo.preload(:user)
 
-      case checkpw(pass, creds.user.password_hash) do
+      case checkpw(pass, creds.password_hash) do
         true -> {:ok, creds.user}
-        _ -> :error
+        _ -> { :error, "Invalid password" }
       end
     else
       _ ->
         dummy_checkpw()
-        {:error}
+        {:error, "User not found"}
     end
   end
 end

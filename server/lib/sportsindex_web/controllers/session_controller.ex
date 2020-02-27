@@ -10,7 +10,7 @@ defmodule SportsindexWeb.SessionController do
   def create(conn, %{"email" => email, "password" => password}) do
 
     # If token already exists, revoke it
-    if conn.assigns.current_user do
+    if Map.get(conn.assigns, :current_user, nil) do
       Auth.logout(conn)
     end
 
@@ -21,6 +21,11 @@ defmodule SportsindexWeb.SessionController do
       conn
       |> put_status(:created)
       |> render("show.json", user: user, jwt: conn.assigns.current_token)
+    else
+      {:error, message} ->
+        conn
+        |> put_status(:unauthorized)
+        |> render("error.json", message: message)
     end
   end
 

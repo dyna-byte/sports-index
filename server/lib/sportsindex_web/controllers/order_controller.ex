@@ -11,14 +11,13 @@ defmodule SportsindexWeb.OrderController do
     render(conn, "index.json", orders: orders)
   end
 
-  def create(conn, %{"order" => order_params}) do
-    with {:ok, %Order{} = order} <- Trades.create_order(order_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.order_path(conn, :show, order))
-      |> render("show.json", order: order)
-    end
-  end
+  # def create(conn, %{"order" => order_params}) do
+  #   with {:ok, %Order{} = order} <- Trades.create_order(order_params) do
+  #     conn
+  #     |> put_status(:created)
+  #     |> render("show.json", order: order)
+  #   end
+  # end
 
   def show(conn, %{"id" => id}) do
     order = Trades.get_order!(id)

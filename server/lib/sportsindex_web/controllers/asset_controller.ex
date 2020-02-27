@@ -15,7 +15,6 @@ defmodule SportsindexWeb.AssetController do
     with {:ok, %Asset{} = asset} <- Assets.create_asset(asset_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.asset_path(conn, :show, asset))
       |> render("show.json", asset: asset)
     end
   end

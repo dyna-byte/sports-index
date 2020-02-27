@@ -12,13 +12,15 @@ defmodule SportsindexWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-    plug Guardian.Plug.LoadResource, allow_blank: true
-    plug Auth
   end
 
   pipeline :authenticated do
     import Auth, only: [authenticate: 2]
+    plug Guardian.Plug.Pipeline, module: SportsindexWeb.Auth.Guardian,
+      error_handler: SportsindexWeb.Auth.GuardianErrorHandler
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug Auth
     plug :authenticate
   end
 

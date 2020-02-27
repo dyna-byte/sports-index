@@ -19,7 +19,7 @@ defmodule SportsindexWeb.Auth do
   """
   def login(conn, user) do
     conn
-    |> G.Plug.sign_in(conn, user)
+    |> Guardian.Plug.sign_in(G, user)
     |> put_resource(user)
   end
 
