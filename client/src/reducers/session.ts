@@ -13,6 +13,7 @@ export default function sessionReducer(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         currentUser: {
+          id: 1,
           name: "Arman"
         }
       };
@@ -30,6 +31,7 @@ export interface ISessionStore {
   isAuthenticated: boolean;
   willAuthenticate: boolean
   currentUser: {
+    id: number,
     name: string
   } | {};
 }

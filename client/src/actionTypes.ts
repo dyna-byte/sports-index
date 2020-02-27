@@ -1,6 +1,6 @@
-const actionTypes = {
-  LOGIN: undefined,
-  LOGOUT: undefined
+const actionTypes: {[type: string]: string} = {
+  LOGIN: "",
+  LOGOUT: ""
 }
 
 for (let key in actionTypes) {
