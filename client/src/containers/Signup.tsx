@@ -18,12 +18,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function Login(props) {
+function Signup(props) {
   const onSubmit = data => props.login(data)
   const classes = useStyles();
 
   const { required, min } = validators;
   const validate = validator([
+    { field: 'name', validators: [ required()] },
     { field: 'email', validators: [ required()] },
     { field: 'password', validators: [ required(), min(6) ] },
   ]);
@@ -36,8 +37,12 @@ function Login(props) {
         render={({handleSubmit}) => (
           <form onSubmit={handleSubmit} className={classes.form}>
             <Typography variant="h5">
-              Login
+              Signup
             </Typography>
+            <Field name="name"
+             component={FormTextField} label="Name" autoComplete="name" 
+             margin="normal" variant="outlined" fullWidth />
+
             <Field name="email"
              component={FormTextField} label="Email" autoComplete="email" 
              margin="normal" variant="outlined" fullWidth />
@@ -48,11 +53,11 @@ function Login(props) {
 
             <Button type="submit" color="primary" fullWidth variant="contained"
              {...{disabled: props.isAuthenticating}}> 
-              { props.isAuthenticating ? "Logging in ..." : "Login" }
+              { props.isAuthenticating ? "Signing you up ..." : "Signup" }
             </Button>
             <Divider className={classes.divider} />
-            <Link to="/signup">
-              <Button variant="contained" color="inherit" fullWidth>Signup</Button> 
+            <Link to="/login">
+              <Button variant="contained" color="inherit" fullWidth>Login</Button> 
             </Link>
           </form>
         )}
@@ -66,4 +71,4 @@ export default connect(
     isAuthenticating: session.isAuthenticating
   }),
   { login }
-)(Login);
+)(Signup);

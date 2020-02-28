@@ -7,8 +7,12 @@ import { IStore } from './reducers';
 import { connect } from 'react-redux';
 import Login from './containers/Login';
 import RedirectAuthenticated from './components/auth/RedirectAuthenticated';
+import Signup from './containers/Signup';
 
 const styles = theme => ({
+  emptyContainer: {
+    paddingTop: theme.spacing(6)
+  },
   container: {
     marginLeft: theme.spacing(30)
   }
@@ -21,14 +25,23 @@ class App extends React.Component<any, any> {
     const authProps = { isAuthenticated, willAuthenticate };
     return (
       <BrowserRouter>
-        <Navbar />
         <CssBaseline />
-        <Container maxWidth="lg" className={classes.container}>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <RedirectAuthenticated exact path="/login" component={Login} {...authProps }/>
+            <Route path={["/login", "/signup"]}>
+                <Container maxWidth="sm" className={classes.emptyContainer}>
+                  <RedirectAuthenticated exact path="/login" component={Login} {...authProps }/>
+                  <RedirectAuthenticated exact path="/signup" component={Signup} {...authProps }/>
+                </Container>
+            </Route>
+            <Route path="/">
+              <>
+                <Navbar />
+                <Container maxWidth="lg" className={classes.container}>
+                <Route exact path="/" component={Home} />
+                </Container>
+              </>
+            </Route>
           </Switch>
-        </Container>
       </BrowserRouter>
     );
   }

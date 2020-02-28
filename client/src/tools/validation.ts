@@ -1,28 +1,38 @@
 /**
  * Generate a validator function
- * @param {*} rules a set of rules in format, {field: 'fieldname', required: true/false, min: minimum, max: maximum}
+ * @param {*} rules a set of field rules and their validators
  */
-export function validator(rules: any) {
+export function validator(rules: {field: string, validators: ((data: string) => string | undefined)[]}[]) {
   return (values) => {
     const errors = {};
 
-    for(let rule of rules) {
+    for(const rule of rules) {
       const fieldname = rule.field;
       const value = values[fieldname];
 
-      if (rule.required && !value) {
-        errors[fieldname] = 'Required'
-      }
+      for (const val of rule.validators) {
+        const error = val(value);
 
-      if (rule.min && value < rule.min) {
-        errors[fieldname] = `Minimum of ${rule.min} characters`
-      }
-
-      if (rule.max && value > rule.max) {
-        errors[fieldname] = `Maximum of ${rule.max} characters`
+        if (error) errors[fieldname] = error;
       }
     }
 
     return errors;
   };
+}
+
+export const validators = {
+  required: () =>  (data) => {
+    return data ? undefined : "Required" 
+  },
+  min: (min) => (data) => {
+    return data && (data.length < min)
+      ? undefined
+      : `Minimum of ${min} characters`;
+  },
+  max: (max) => (data) => {
+    return data && (data.length > max)
+      ? undefined
+      : `Maximum of ${max} characters`;
+  }
 }
