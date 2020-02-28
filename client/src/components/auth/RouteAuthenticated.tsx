@@ -7,13 +7,13 @@ const RouteAuthenticated = ({
   exact,
   isAuthenticated,
   willAuthenticate,
-  component: Component,
+  children,
 }) =>
   <Route
     exact={exact}
     path={path}
     render={(props) => {
-      if (isAuthenticated) { return <Component {...props} />; }
+      if (isAuthenticated) { return children; }
       if (willAuthenticate) { return null; }
       if (!willAuthenticate && !isAuthenticated) { return <Redirect to={'/login' } />; }
       return null;

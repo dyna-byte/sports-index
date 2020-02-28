@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Login from './containers/Login';
 import RedirectAuthenticated from './components/auth/RedirectAuthenticated';
 import Signup from './containers/Signup';
+import RouteAuthenticated from './components/auth/RouteAuthenticated';
 
 const styles = theme => ({
   emptyContainer: {
@@ -33,14 +34,14 @@ class App extends React.Component<any, any> {
                   <RedirectAuthenticated exact path="/signup" component={Signup} {...authProps }/>
                 </Container>
             </Route>
-            <Route path="/">
+            <RouteAuthenticated exact={false} path="/" {...authProps}>
               <>
                 <Navbar />
                 <Container maxWidth="lg" className={classes.container}>
                 <Route exact path="/" component={Home} />
                 </Container>
               </>
-            </Route>
+            </RouteAuthenticated>
           </Switch>
       </BrowserRouter>
     );
