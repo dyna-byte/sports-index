@@ -40,7 +40,8 @@ function Login(props) {
              component={FormTextField} label="Password"
              margin="normal" variant="outlined" fullWidth type="password" />
 
-            <Button type="submit" color="primary" fullWidth variant="contained">
+            <Button type="submit" color="primary" fullWidth variant="contained"
+             {...{disabled: props.isAuthenticating}}> 
               { props.isAuthenticating ? "Logging in ..." : "Login" }
             </Button>
           </form>

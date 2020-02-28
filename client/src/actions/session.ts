@@ -11,7 +11,6 @@ export function login(data) {
 
     return api.post('api/sessions', data)
       .then(async (response) => {
-        console.log(response);
         setCurrentUser(response.data);
         dispatch({ type: actionTypes.LOGIN, response: response.data })
       }).catch((err) => {
