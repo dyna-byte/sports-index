@@ -24,6 +24,10 @@ export function validator(rules: {field: string, validators: ((data: string) => 
   };
 }
 
+const commonRegs = {
+  email: /^\S+@\S+\.\S+$/
+};
+
 export const validators = {
   required: () =>  (data) => {
     return data ? undefined : "Required" 
@@ -37,5 +41,11 @@ export const validators = {
     return data && (data.length < max)
       ? undefined
       : `Maximum of ${max} characters`;
-  }
+  },
+  pattern: (pattern: RegExp, error?: string) => (data) => 
+    pattern.test(data)
+      ? undefined
+      : (error || `Does not match ${pattern}`)
+  ,
+  email: () => validators.pattern(commonRegs.email, "Invalid Email")
 }

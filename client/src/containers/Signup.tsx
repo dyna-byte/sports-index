@@ -22,10 +22,10 @@ function Signup(props) {
   const onSubmit = data => props.signup(data)
   const classes = useStyles();
 
-  const { required, min } = validators;
+  const { required, min, email } = validators;
   const validate = validator([
-    { field: 'name', validators: [ required()] },
-    { field: 'email', validators: [ required()] },
+    { field: 'name', validators: [ required() ] },
+    { field: 'email', validators: [ required(), email() ] },
     { field: 'password', validators: [ required(), min(6) ] },
   ]);
 

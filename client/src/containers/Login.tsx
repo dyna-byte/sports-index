@@ -22,9 +22,9 @@ function Login(props) {
   const onSubmit = data => props.login(data)
   const classes = useStyles();
 
-  const { required, min } = validators;
+  const { required, min, email } = validators;
   const validate = validator([
-    { field: 'email', validators: [ required()] },
+    { field: 'email', validators: [ required(), email() ] },
     { field: 'password', validators: [ required(), min(6) ] },
   ]);
 
