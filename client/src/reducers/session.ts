@@ -4,6 +4,7 @@ const initialState: ISessionStore = {
   isAuthenticated: false,
   isAuthenticating: false,
   willAuthenticate: false,
+  error: null,
   currentUser: {}
 };
 
@@ -13,11 +14,12 @@ export default function sessionReducer(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
-        currentUser: action.response.user
+        currentUser: action.data.user
       };
     case actionTypes.LOGIN_REQUEST:
       return {
         ...state,
+        error: null,
         isAuthenticated: false,
         isAuthenticating: true
       };
@@ -25,7 +27,28 @@ export default function sessionReducer(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: false,
-        isAuthenticating: false
+        isAuthenticating: false,
+        error: "Failed to login"
+      };
+    case actionTypes.SIGNUP:
+      return {
+        ...state,
+        isAuthenticated: true,
+        currentUser: action.data.user
+      };
+    case actionTypes.SIGNUP_REQUEST:
+      return {
+        ...state,
+        error: null,
+        isAuthenticated: false,
+        isAuthenticating: true
+      };
+    case actionTypes.SIGNUP_FAILURE:
+      return {
+        ...state,
+        isAuthenticated: false,
+        isAuthenticating: false,
+        error: "Failed to signup"
       };
     case actionTypes.LOGOUT:
       return {
@@ -40,7 +63,8 @@ export default function sessionReducer(state = initialState, action) {
 export interface ISessionStore {
   isAuthenticated: boolean;
   isAuthenticating: boolean;
-  willAuthenticate: boolean
+  error: any;
+  willAuthenticate: boolean;
   currentUser: {
     id: number,
     name: string

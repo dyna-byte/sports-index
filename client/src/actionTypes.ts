@@ -1,7 +1,11 @@
 const actionTypes = {
+  // Session
   LOGIN: "",
   LOGIN_REQUEST: "",
   LOGIN_FAILURE: "",
+  SIGNUP: "",
+  SIGNUP_REQUEST: "",
+  SIGNUP_FAILURE: "",
   LOGOUT: ""
 }
 

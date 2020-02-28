@@ -12,9 +12,23 @@ export function login(data) {
     return api.post('api/sessions', data)
       .then(async (response) => {
         setCurrentUser(response.data);
-        dispatch({ type: actionTypes.LOGIN, response: response.data })
+        dispatch({ type: actionTypes.LOGIN, data: response.data })
       }).catch((err) => {
         dispatch({ type: actionTypes.LOGIN_FAILURE })
+      });
+  }
+}
+
+export function signup(data) {
+  return dispatch => {
+    dispatch({ type: actionTypes.SIGNUP_REQUEST });
+
+    return api.post('api/users', { user: data })
+      .then(async (response) => {
+        setCurrentUser(response.data);
+        dispatch({ type: actionTypes.SIGNUP, data: response.data })
+      }).catch((err) => {
+        dispatch({ type: actionTypes.SIGNUP_FAILURE })
       });
   }
 }

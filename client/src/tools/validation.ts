@@ -26,12 +26,12 @@ export const validators = {
     return data ? undefined : "Required" 
   },
   min: (min) => (data) => {
-    return data && (data.length < min)
+    return data && (data.length >= min)
       ? undefined
       : `Minimum of ${min} characters`;
   },
   max: (max) => (data) => {
-    return data && (data.length > max)
+    return data && (data.length < max)
       ? undefined
       : `Maximum of ${max} characters`;
   }

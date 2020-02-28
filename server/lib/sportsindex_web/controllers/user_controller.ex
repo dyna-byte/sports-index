@@ -3,6 +3,7 @@ defmodule SportsindexWeb.UserController do
 
   alias Sportsindex.Accounts
   alias Sportsindex.Accounts.User
+  alias SportsindexWeb.Auth
 
   action_fallback SportsindexWeb.FallbackController
 
@@ -13,9 +14,11 @@ defmodule SportsindexWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user_creds(user_params) do
+      conn = Auth.login(conn, user)
+
       conn
       |> put_status(:created)
-      |> render("show.json", user: user)
+      |> render("new.json", user: user, jwt: conn.assigns.current_token)
     end
   end
 

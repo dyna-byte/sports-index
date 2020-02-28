@@ -1,5 +1,5 @@
 import React from 'react';
-import { login } from '../actions/session';
+import { signup } from '../actions/session';
 import { connect } from 'react-redux';
 import { Paper, Button, Typography, makeStyles, Divider } from '@material-ui/core';
 import { Form, Field } from 'react-final-form';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Signup(props) {
-  const onSubmit = data => props.login(data)
+  const onSubmit = data => props.signup(data)
   const classes = useStyles();
 
   const { required, min } = validators;
@@ -70,5 +70,5 @@ export default connect(
   ({session}: IStore) => ({
     isAuthenticating: session.isAuthenticating
   }),
-  { login }
+  { signup }
 )(Signup);
