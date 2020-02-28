@@ -13,7 +13,10 @@ export function validator(rules: {field: string, validators: ((data: string) => 
       for (const val of rule.validators) {
         const error = val(value);
 
-        if (error) errors[fieldname] = error;
+        if (error) {
+           errors[fieldname] = error;
+           break;
+        }
       }
     }
 
