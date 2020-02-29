@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { queryString } from '../../tools/http';
 
 
 const RedirectAuthenticated = ({
@@ -13,7 +14,8 @@ const RedirectAuthenticated = ({
     exact={exact}
     path={path}
     render={(props) => {
-      if (isAuthenticated) { return <Redirect to={'/'} />; }
+      const redirect: string = queryString(props.location.search).redirect;
+      if (isAuthenticated) { return <Redirect to={redirect || '/'} />; }
       if (willAuthenticate) { return null; }
       if (!willAuthenticate && !isAuthenticated) { return <Component {...props} />; }
       return null;

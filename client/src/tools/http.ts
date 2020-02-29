@@ -3,8 +3,10 @@
  * @param path a path string after `?` of a url
  */
 export function queryString(path: string): {[key: string]: string} {
-  const keyVals = path.split('&')
-  .map(item => item.split('='));
+  const keyVals = path
+    .replace('?', '')
+    .split('&')
+    .map(item => item.split('='));
 
   const result = {};
 
