@@ -6,6 +6,7 @@ const actionTypes = {
   SIGNUP: "",
   SIGNUP_REQUEST: "",
   SIGNUP_FAILURE: "",
+  REFRESH_REQUEST: "",
   LOGOUT: ""
 }
 

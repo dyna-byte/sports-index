@@ -15,7 +15,9 @@ const RouteAuthenticated = ({
     render={(props) => {
       if (isAuthenticated) { return children; }
       if (willAuthenticate) { return null; }
-      if (!willAuthenticate && !isAuthenticated) { return <Redirect to={'/login' } />; }
+      if (!willAuthenticate && !isAuthenticated) {
+         return <Redirect to={`/login?redirect=${encodeURIComponent(props.location.pathname)}` } />; 
+      }
       return null;
     }}
   />;

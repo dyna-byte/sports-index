@@ -9,6 +9,8 @@ import Login from './containers/Login';
 import RedirectAuthenticated from './components/auth/RedirectAuthenticated';
 import Signup from './containers/Signup';
 import RouteAuthenticated from './components/auth/RouteAuthenticated';
+import { getToken } from './tools/sessionStore';
+import { refresh } from './actions/session';
 
 const styles = theme => ({
   emptyContainer: {
@@ -20,6 +22,11 @@ const styles = theme => ({
 });
 
 class App extends React.Component<any, any> {
+  componentDidMount() {
+    if(getToken()) {
+      this.props.refresh()
+    }
+  }
 
   render() {
     const { classes, isAuthenticated, willAuthenticate } = this.props;
@@ -52,5 +59,6 @@ export default withStyles(styles)(connect(
   ({session}: IStore) => ({
     isAuthenticated: session.isAuthenticated,
     willAuthenticate: session.willAuthenticate
-  })
+  }),
+  { refresh }
 )(App));

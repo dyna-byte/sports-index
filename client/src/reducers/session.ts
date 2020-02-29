@@ -50,6 +50,13 @@ export default function sessionReducer(state = initialState, action) {
         isAuthenticating: false,
         error: "Failed to signup"
       };
+    case actionTypes.REFRESH_REQUEST:
+      return {
+        ...state,
+        error: null,
+        isAuthenticated: false,
+        isAuthenticating: true
+      };
     case actionTypes.LOGOUT:
       return {
         ...state,

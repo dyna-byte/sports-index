@@ -47,5 +47,5 @@ export const validators = {
       ? undefined
       : (error || `Does not match ${pattern}`)
   ,
-  email: () => validators.pattern(commonRegs.email, "Invalid Email")
+  email: () => validators.pattern(commonRegs.email, "Invalid Email"),
 }

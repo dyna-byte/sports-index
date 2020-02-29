@@ -33,6 +33,21 @@ export function signup(data) {
   }
 }
 
+export function refresh(data) {
+  return dispatch => {
+    dispatch({ type: actionTypes.REFRESH_REQUEST });
+
+    return api.get('api/sessions/refresh')
+      .then(async (response) => {
+        setCurrentUser(response.data);
+        dispatch({ type: actionTypes.LOGIN, data: response.data })
+      }).catch((err) => {
+        dispatch({ type: actionTypes.LOGIN_FAILURE })
+        setCurrentUser(null);
+      });
+  }
+}
+
 export function logout() {
   return dispatch => {
     return api.delete('api/sessions')
