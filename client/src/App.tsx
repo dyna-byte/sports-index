@@ -27,22 +27,22 @@ class App extends React.Component<any, any> {
     return (
       <BrowserRouter>
         <CssBaseline />
-          <Switch>
-            <Route path={["/login", "/signup"]}>
-                <Container maxWidth="sm" className={classes.emptyContainer}>
-                  <RedirectAuthenticated exact path="/login" component={Login} {...authProps }/>
-                  <RedirectAuthenticated exact path="/signup" component={Signup} {...authProps }/>
-                </Container>
-            </Route>
-            <RouteAuthenticated exact={false} path="/" {...authProps}>
-              <>
-                <Navbar />
-                <Container maxWidth="lg" className={classes.container}>
+        <Switch>
+          <Route path={["/login", "/signup"]}>
+            <Container maxWidth="sm" className={classes.emptyContainer}>
+              <RedirectAuthenticated exact path="/login" component={Login} {...authProps }/>
+              <RedirectAuthenticated exact path="/signup" component={Signup} {...authProps }/>
+            </Container>
+          </Route>
+          <RouteAuthenticated exact={false} path="/" {...authProps}>
+            <>
+              <Navbar />
+              <Container maxWidth="lg" className={classes.container}>
                 <Route exact path="/" component={Home} />
-                </Container>
-              </>
-            </RouteAuthenticated>
-          </Switch>
+              </Container>
+            </>
+          </RouteAuthenticated>
+        </Switch>
       </BrowserRouter>
     );
   }
