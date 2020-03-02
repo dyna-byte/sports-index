@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from './containers/Home';
-import Navbar from './components/layout/Navbar';
 import { CssBaseline, Container, withStyles } from '@material-ui/core';
 import { IStore } from './reducers';
 import { connect } from 'react-redux';
@@ -11,6 +9,7 @@ import Signup from './containers/Signup';
 import RouteAuthenticated from './components/auth/RouteAuthenticated';
 import { getToken } from './tools/sessionStore';
 import { refresh } from './actions/session';
+import Main from './containers/Main';
 
 const styles = theme => ({
   emptyContainer: {
@@ -42,12 +41,7 @@ class App extends React.Component<any, any> {
             </Container>
           </Route>
           <RouteAuthenticated exact={false} path="/" {...authProps}>
-            <>
-              <Navbar />
-              <Container maxWidth="lg" className={classes.container}>
-                <Route exact path="/" component={Home} />
-              </Container>
-            </>
+            <Main />
           </RouteAuthenticated>
         </Switch>
       </BrowserRouter>

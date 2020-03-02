@@ -7,11 +7,10 @@ import { AppBar, makeStyles, Toolbar, IconButton,
     ListItemIcon, ListItemText, SvgIcon } from '@material-ui/core';
 
 // Icons
-import MenuIcon from '@material-ui/icons/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import { Link } from 'react-router-dom';
-import Logo, { ReactComponent as  ReactLogo } from '../../logo.svg';
+import { ReactComponent as  ReactLogo } from '../../logo.svg';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,25 +32,28 @@ const useStyles = makeStyles(theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-  drawerClose: {
+  drawerOpen: {
     whiteSpace: 'nowrap',
     overflowX: 'hidden',
     width: theme.spacing(30)
+  },
+  drawerClose: {
+    whiteSpace: 'nowrap',
+    overflowX: 'hidden',
+    width: theme.spacing(8)
   }
 }));
 const Navbar = (props) => {
   const classes = useStyles();
-  const { isAuthenticated, currentUser } = props;
-  const [open, setOpen] = React.useState(false);
+  const { isAuthenticated, currentUser, drawerOpen, handleDrawerToggle } = props;
 
-  const handleOpen = () => setOpen(!open)
   const handleLogout = () => props.logout();
 
   return (<nav className={classes.root}>
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
         <IconButton color="inherit" className={classes.menuButton} aria-label="menu" edge="start"
-        onClick={handleOpen}>
+        onClick={handleDrawerToggle}>
           <SvgIcon component={ReactLogo} viewBox="0 0 12.386 14.359" />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
@@ -67,7 +69,8 @@ const Navbar = (props) => {
         }
       </Toolbar>
     </AppBar>
-    <Drawer variant="permanent" open={open} classes={{paper: classes.drawerClose}}>
+    <Drawer variant="permanent" open={drawerOpen} 
+      classes={{paper: drawerOpen ? classes.drawerOpen : classes.drawerClose}}>
       <div className={classes.toolbarIcon}></div>
       <List>
         <ListItem button>
