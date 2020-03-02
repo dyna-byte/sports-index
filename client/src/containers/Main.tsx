@@ -15,8 +15,10 @@ const styles = makeStyles(theme => ({
 
 function Main(props) {
   const classes = styles();
+
   const [open, setOpen] = React.useState(false)
   const handleDrawerToggle = () => setOpen(!open)
+
   return (
     <>
       <Navbar drawerOpen={open} handleDrawerToggle={handleDrawerToggle} />
