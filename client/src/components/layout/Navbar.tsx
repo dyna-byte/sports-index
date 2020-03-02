@@ -4,13 +4,14 @@ import { IStore } from '../../reducers';
 import { logout } from '../../actions/session';
 import { AppBar, makeStyles, Toolbar, IconButton,
    Typography, Button, Drawer, List, ListItem,
-    ListItemIcon, ListItemText } from '@material-ui/core';
+    ListItemIcon, ListItemText, SvgIcon } from '@material-ui/core';
 
 // Icons
 import MenuIcon from '@material-ui/icons/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import { Link } from 'react-router-dom';
+import Logo, { ReactComponent as  ReactLogo } from '../../logo.svg';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,6 +37,9 @@ const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap',
     overflowX: 'hidden',
     width: theme.spacing(30)
+  },
+  logo: {
+    padding: theme.spacing(1),
   }
 }));
 const Navbar = (props) => {
@@ -53,6 +57,9 @@ const Navbar = (props) => {
         onClick={handleOpen}>
           <MenuIcon />
         </IconButton>
+        <div className={classes.logo}>
+          <SvgIcon component={ReactLogo} viewBox="0 0 12.386 14.359" />
+        </div>
         <Typography variant="h6" className={classes.title}>
           Sports Index
         </Typography>
