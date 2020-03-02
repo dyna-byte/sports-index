@@ -37,9 +37,6 @@ const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap',
     overflowX: 'hidden',
     width: theme.spacing(30)
-  },
-  logo: {
-    padding: theme.spacing(1),
   }
 }));
 const Navbar = (props) => {
@@ -55,11 +52,8 @@ const Navbar = (props) => {
       <Toolbar>
         <IconButton color="inherit" className={classes.menuButton} aria-label="menu" edge="start"
         onClick={handleOpen}>
-          <MenuIcon />
-        </IconButton>
-        <div className={classes.logo}>
           <SvgIcon component={ReactLogo} viewBox="0 0 12.386 14.359" />
-        </div>
+        </IconButton>
         <Typography variant="h6" className={classes.title}>
           Sports Index
         </Typography>
