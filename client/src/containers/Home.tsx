@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { login } from '../actions/session';
 import { connect } from 'react-redux';
 import { IStore } from '../reducers';

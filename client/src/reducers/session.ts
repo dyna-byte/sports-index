@@ -3,7 +3,7 @@ import actionTypes from '../actionTypes';
 const initialState: ISessionStore = {
   isAuthenticated: false,
   isAuthenticating: false,
-  willAuthenticate: false,
+  willAuthenticate: false, // currently unused, maybe delete
   error: null,
   currentUser: {}
 };
@@ -14,6 +14,7 @@ export default function sessionReducer(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        isAuthenticating: false,
         currentUser: action.data.user
       };
     case actionTypes.LOGIN_REQUEST:
