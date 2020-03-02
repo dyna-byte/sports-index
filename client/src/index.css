@@ -12,6 +12,14 @@ code {
     monospace;
 }
 
+
+/*
+  Overriding material ui components
+*/
+
 .paper { 
   padding: 20px;
 }
+
+/* Align top icon with drawer */
+#root > nav .MuiAppBar-root .MuiToolbar-root { padding-left: 16px; }
