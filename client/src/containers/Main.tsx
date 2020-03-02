@@ -6,10 +6,18 @@ import { Container, makeStyles } from '@material-ui/core';
 
 const styles = makeStyles(theme => ({
   container: {
-    marginLeft: theme.spacing(30)
+    marginLeft: theme.spacing(30),
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   containerDrawerClose: {
-    marginLeft: theme.spacing(8)
+    marginLeft: theme.spacing(8),
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   }
 }));
 

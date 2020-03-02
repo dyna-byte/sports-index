@@ -35,12 +35,20 @@ const useStyles = makeStyles(theme => ({
   drawerOpen: {
     whiteSpace: 'nowrap',
     overflowX: 'hidden',
-    width: theme.spacing(30)
+    width: theme.spacing(30),
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerClose: {
     whiteSpace: 'nowrap',
     overflowX: 'hidden',
-    width: theme.spacing(8)
+    width: theme.spacing(8),
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   }
 }));
 const Navbar = (props) => {
