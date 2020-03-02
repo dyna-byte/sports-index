@@ -15,10 +15,7 @@ class Home extends React.Component<any, any> {
       <div>
         <h1>Home</h1>
         { currentUser && 
-        <h2>User: { currentUser.name }</h2>}
-        <Button onClick={this.handleLogin}>
-          Login
-        </Button>
+        <h2>User: { currentUser.name } | { currentUser.id }</h2>}
       </div>
     )
   }

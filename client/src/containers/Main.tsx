@@ -16,7 +16,7 @@ const styles = makeStyles(theme => ({
 function Main(props) {
   const classes = styles();
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   const handleDrawerToggle = () => setOpen(!open)
 
   return (
