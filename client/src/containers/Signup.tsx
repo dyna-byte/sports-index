@@ -52,7 +52,7 @@ function Signup(props) {
              margin="normal" variant="outlined" fullWidth type="password" />
 
             <Button type="submit" color="primary" fullWidth variant="contained"
-             {...{disabled: props.isAuthenticating}}> 
+             disabled={props.isAuthenticating} > 
               { props.isAuthenticating ? "Signing you up ..." : "Signup" }
             </Button>
             <Divider className={classes.divider} />
