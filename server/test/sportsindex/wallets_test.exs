@@ -11,55 +11,42 @@ defmodule Sportsindex.WalletsTest do
     @invalid_attrs %{currency: "some crap", value: nil}
 
     def wallet_fixture(attrs \\ %{}) do
+      user = insert_user()
       {:ok, wallet} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Wallets.create_wallet()
+        |> Wallets.create_wallet(user)
 
-      wallet
+      {wallet, user}
     end
 
-    test "list_walleta/0 returns all wallets" do
-      wallet = wallet_fixture()
-      assert Wallets.list_wallets() == [wallet]
-    end
-
-    test "get_wallet!/1 returns the wallet with given id" do
-      wallet = wallet_fixture()
-      assert Wallets.get_wallet!(wallet.id) == wallet
+    test "get_user_wallet!/1 returns the user's wallet" do
+      {wallet, user} = wallet_fixture()
+      wallets = Wallets.get_user_wallets(user)
+      assert length(wallets) == 1
+      assert Enum.at(wallets, 0).id == wallet.id
     end
 
     test "create_wallet/1 with valid data creates a wallet" do
-      assert {:ok, %Wallet{} = wallet} = Wallets.create_wallet(@valid_attrs)
+      user = insert_user()
+      assert {:ok, %Wallet{} = wallet} = Wallets.create_wallet(@valid_attrs, user)
       assert wallet.currency == Map.get(@valid_attrs, :currency)
       assert wallet.value == 42
     end
 
     test "create_wallet/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Wallets.create_wallet(@invalid_attrs)
-    end
-
-    test "update_wallet/2 with valid data updates the wallet" do
-      wallet = wallet_fixture()
-      assert {:ok, %Wallet{} = wallet} = Wallets.update_wallet(wallet, @update_attrs)
-      assert wallet.currency == Map.get(@update_attrs, :currency)
-      assert wallet.value == 43
-    end
-
-    test "update_wallet/2 with invalid data returns error changeset" do
-      wallet = wallet_fixture()
-      assert {:error, %Ecto.Changeset{}} = Wallets.update_wallet(wallet, @invalid_attrs)
-      assert wallet == Wallets.get_wallet!(wallet.id)
+      user = insert_user()
+      assert {:error, %Ecto.Changeset{}} = Wallets.create_wallet(@invalid_attrs, user)
     end
 
     test "delete_wallet/1 deletes the wallet" do
-      wallet = wallet_fixture()
+      {wallet, _user} = wallet_fixture()
       assert {:ok, %Wallet{}} = Wallets.delete_wallet(wallet)
       assert_raise Ecto.NoResultsError, fn -> Wallets.get_wallet!(wallet.id) end
     end
 
     test "change_wallet/1 returns a wallet changeset" do
-      wallet = wallet_fixture()
+      {wallet, _user} = wallet_fixture()
       assert %Ecto.Changeset{} = Wallets.change_wallet(wallet)
     end
   end

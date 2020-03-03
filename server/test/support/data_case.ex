@@ -24,6 +24,7 @@ defmodule Sportsindex.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Sportsindex.DataCase
+      import Sportsindex.AuthHelpers
     end
   end
 

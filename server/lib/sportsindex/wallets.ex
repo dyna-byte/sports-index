@@ -4,6 +4,7 @@ defmodule Sportsindex.Wallets do
   """
 
   import Ecto.Query, warn: false
+  import Ecto
   alias Sportsindex.Repo
 
   alias Sportsindex.Wallets.Wallet
@@ -37,6 +38,11 @@ defmodule Sportsindex.Wallets do
   """
   def get_wallet!(id), do: Repo.get!(Wallet, id)
 
+  def get_user_wallets(user) do
+    assoc(user, :wallets)
+    |> Repo.all()
+  end
+
   @doc """
   Creates a wallet.
 
@@ -49,9 +55,9 @@ defmodule Sportsindex.Wallets do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_wallet(attrs \\ %{}) do
+  def create_wallet(attrs \\ %{}, user) do
     %Wallet{}
-    |> Wallet.changeset(attrs)
+    |> Wallet.changeset(attrs, user)
     |> Repo.insert()
   end
 

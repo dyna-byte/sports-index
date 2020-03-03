@@ -2,8 +2,12 @@ defmodule Sportsindex.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Sportsindex.Wallets.Wallet
+
   schema "users" do
     field :name, :string
+
+    has_many :wallets, Wallet
 
     timestamps()
   end
