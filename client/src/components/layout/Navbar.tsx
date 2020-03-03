@@ -88,7 +88,7 @@ const Navbar = (props) => {
             <ListItemText primary="Assets" />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button component={Link} to="/balance">
           <ListItemIcon>
             <AccountBalanceIcon />
           </ListItemIcon>

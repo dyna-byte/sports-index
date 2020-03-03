@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import session, { ISessionStore } from './session';
-import { IWalletStore } from './wallet';
+import wallet, { IWalletStore } from './wallet';
 
 const reducers = combineReducers({
-  session
+  session,
+  wallet
 });
 
 export default function (state, action) {
