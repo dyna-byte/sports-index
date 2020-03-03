@@ -19,11 +19,23 @@ defmodule Sportsindex.WalletsTest do
       {wallet, user}
     end
 
-    test "get_user_wallet!/1 returns the user's wallet" do
+    test "get_user_wallets/1 returns the user's wallet" do
       {wallet, user} = wallet_fixture()
       wallets = Wallets.get_user_wallets(user)
       assert length(wallets) == 1
       assert Enum.at(wallets, 0).id == wallet.id
+    end
+
+    test "get_user_wallet!/1 returns the user's wallet" do
+      {wallet, user} = wallet_fixture()
+      user_wallet = Wallets.get_user_wallet!(wallet.id, user)
+      assert wallet.id == user_wallet.id
+    end
+
+    test "get_user_wallet!/1 fails if user is not the owner" do
+      {wallet, _user} = wallet_fixture()
+      other_user = insert_user(%{ email: "other@test.com" })
+      assert_raise Ecto.NoResultsError, fn -> Wallets.get_user_wallet!(wallet.id, other_user) end
     end
 
     test "create_wallet/1 with valid data creates a wallet" do

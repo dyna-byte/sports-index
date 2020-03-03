@@ -32,7 +32,7 @@ defmodule SportsindexWeb.WalletController do
   end
 
   def delete(conn, %{"id" => id}, user) do
-    wallet = Wallets.get_wallet!(id)
+    wallet = Wallets.get_user_wallet!(id, user)
     cond do
       wallet.user.id == user.id ->
         with {:ok, %Wallet{}} <- Wallets.delete_wallet(wallet) do
