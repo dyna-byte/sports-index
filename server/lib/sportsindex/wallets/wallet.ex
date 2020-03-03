@@ -33,6 +33,6 @@ defmodule Sportsindex.Wallets.Wallet do
 
   def validate_currency(changeset) do
     changeset
-    |> validate_inclusion(:currency, ["GBP", "EUR", "USD", "BTC"])
+    |> validate_inclusion(:currency, ["GBP", "EUR", "USD", "BTC"]) # to be changed to the payment source
   end
 end
