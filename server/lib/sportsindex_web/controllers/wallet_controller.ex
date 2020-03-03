@@ -10,8 +10,8 @@ defmodule SportsindexWeb.WalletController do
     apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
   end
 
-  def index(conn, _params, _user) do
-    wallets = Wallets.list_wallets()
+  def index(conn, _params, user) do
+    wallets = Wallets.get_user_wallets(user)
     render(conn, "index.json", wallets: wallets)
   end
 
@@ -21,11 +21,6 @@ defmodule SportsindexWeb.WalletController do
       |> put_status(:created)
       |> render("show.json", wallet: wallet)
     end
-  end
-
-  def show(conn, %{"id" => id}, _user) do
-    wallet = Wallets.get_wallet!(id)
-    render(conn, "show.json", wallet: wallet)
   end
 
   def update(conn, %{"id" => id, "wallet" => wallet_params}, _user) do

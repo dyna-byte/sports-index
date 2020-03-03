@@ -40,5 +40,7 @@ defmodule SportsindexWeb.Router do
     pipe_through :authenticated
     delete "/sessions", SessionController, :delete
     get "/sessions/refresh", SessionController, :refresh
+
+    resources "/wallets", WalletController, only: [:index, :create]
   end
 end

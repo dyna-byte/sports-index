@@ -36,7 +36,7 @@ defmodule Sportsindex.Wallets do
       ** (Ecto.NoResultsError)
 
   """
-  def get_wallet!(id), do: Repo.get!(Wallet, id)
+  def get_wallet!(id), do: Repo.get!(Wallet, id) |> Repo.preload(:user)
 
   def get_user_wallets(user) do
     assoc(user, :wallets)

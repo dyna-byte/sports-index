@@ -7,7 +7,6 @@ defmodule Sportsindex.WalletsTest do
     alias Sportsindex.Wallets.Wallet
 
     @valid_attrs %{currency: "USD", value: 42}
-    @update_attrs %{currency: "USD", value: 43}
     @invalid_attrs %{currency: "some crap", value: nil}
 
     def wallet_fixture(attrs \\ %{}) do
