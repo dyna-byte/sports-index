@@ -31,11 +31,16 @@ defmodule SportsindexWeb.WalletController do
     end
   end
 
-  def delete(conn, %{"id" => id}, _user) do
+  def delete(conn, %{"id" => id}, user) do
     wallet = Wallets.get_wallet!(id)
-
-    with {:ok, %Wallet{}} <- Wallets.delete_wallet(wallet) do
-      send_resp(conn, :no_content, "")
+    cond do
+      wallet.user.id == user.id ->
+        with {:ok, %Wallet{}} <- Wallets.delete_wallet(wallet) do
+          send_resp(conn, :no_content, "{}")
+        end
+      true ->
+        send_resp(conn, :forbidden, "")
     end
+
   end
 end
