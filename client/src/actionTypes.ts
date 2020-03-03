@@ -7,7 +7,10 @@ const actionTypes = {
   SIGNUP_REQUEST: "",
   SIGNUP_FAILURE: "",
   REFRESH_REQUEST: "",
-  LOGOUT: ""
+  LOGOUT: "",
+  WALLETS_REQUEST: "",
+  WALLETS: "",
+  WALLET_NEW: ""
 }
 
 for (let key in actionTypes) {
