@@ -22,6 +22,12 @@
       }
     },
     {
+      "label": "Test Case",
+      "type": "shell",
+      "command": "mix test ${file}:${lineNumber}",
+      "group": "test",
+    },
+    {
       "label": "Test File interactive",
       "type": "shell",
       "command": "iex -S mix test ${file}",
