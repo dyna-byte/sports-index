@@ -44,6 +44,13 @@ defmodule Sportsindex.Wallets do
     |> Repo.one()
   end
 
+  def create_wallet(attrs, user) do
+    %Wallet{}
+    |> Wallet.changeset(attrs, user)
+    |> Repo.insert()
+  end
+
+
   @doc """
   Updates a wallet.
 

@@ -3,7 +3,7 @@ defmodule Sportsindex.Wallets.Wallet do
   import Ecto.Changeset
 
   schema "wallets" do
-    field :value, :integer
+    field :value, :integer, default: 0
 
     belongs_to :user, Sportsindex.Accounts.User
 
@@ -14,6 +14,7 @@ defmodule Sportsindex.Wallets.Wallet do
   def changeset(wallet, attrs) do
     wallet
     |> cast(attrs, [:value])
+    |> validate_required([:value])
   end
 
   def changeset(wallet, attrs, user) do

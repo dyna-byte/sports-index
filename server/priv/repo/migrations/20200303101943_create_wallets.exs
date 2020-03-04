@@ -3,7 +3,7 @@ defmodule Sportsindex.Repo.Migrations.CreateWallets do
 
   def change do
     create table(:wallets) do
-      add :value, :integer, default: 0
+      add :value, :integer, default: 0, null: false
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()

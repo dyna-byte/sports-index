@@ -41,6 +41,6 @@ defmodule SportsindexWeb.Router do
     delete "/sessions", SessionController, :delete
     get "/sessions/refresh", SessionController, :refresh
 
-    resources "/wallets", WalletController, only: [:index, :create]
+    resources "/wallets", WalletController, only: [:index, :update]
   end
 end

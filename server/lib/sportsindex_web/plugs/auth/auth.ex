@@ -48,8 +48,8 @@ defmodule SportsindexWeb.Auth do
     else
       conn
       |> put_status(:forbidden)
-      |> put_view(Sling.SessionView)
-      |> render("forbidden.json", error: "Not Authenticated")
+      |> put_view(SportsindexWeb.SessionView)
+      |> render("error.json", message: "Not Authenticated")
       |> halt()
     end
   end

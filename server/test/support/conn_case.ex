@@ -22,6 +22,7 @@ defmodule SportsindexWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       alias SportsindexWeb.Router.Helpers, as: Routes
+      import Sportsindex.AuthHelpers
 
       # The default endpoint for testing
       @endpoint SportsindexWeb.Endpoint
