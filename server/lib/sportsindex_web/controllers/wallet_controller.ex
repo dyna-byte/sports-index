@@ -11,8 +11,8 @@ defmodule SportsindexWeb.WalletController do
   end
 
   def index(conn, _params, user) do
-    wallets = Wallets.get_user_wallets(user)
-    render(conn, "index.json", wallets: wallets)
+    wallet = Wallets.get_user_wallet(user)
+    render(conn, "index.json", wallets: [wallet])
   end
 
   def create(conn , %{"wallet" => wallet_params}, user) do

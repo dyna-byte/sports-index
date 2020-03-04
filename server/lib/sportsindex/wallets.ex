@@ -37,11 +37,11 @@ defmodule Sportsindex.Wallets do
 
   """
   def get_wallet!(id), do: Repo.get!(Wallet, id) |> Repo.preload(:user)
-  def get_user_wallet!(id, user), do: assoc(user, :wallets) |> Repo.get!(id)
+  def get_user_wallet!(id, user), do: assoc(user, :wallet) |> Repo.get!(id)
 
-  def get_user_wallets(user) do
-    assoc(user, :wallets)
-    |> Repo.all()
+  def get_user_wallet(user) do
+    assoc(user, :wallet)
+    |> Repo.one()
   end
 
   @doc """

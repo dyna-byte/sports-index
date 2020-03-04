@@ -12,7 +12,6 @@ defmodule SportsindexWeb.WalletView do
 
   def render("wallet.json", %{wallet: wallet}) do
     %{id: wallet.id,
-      currency: wallet.currency,
       value: wallet.value}
   end
 end

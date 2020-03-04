@@ -6,8 +6,8 @@ defmodule Sportsindex.WalletsTest do
   describe "wallets" do
     alias Sportsindex.Wallets.Wallet
 
-    @valid_attrs %{currency: "USD", value: 42}
-    @invalid_attrs %{currency: "some crap", value: nil}
+    @valid_attrs %{value: 42}
+    @invalid_attrs %{value: "wrong"}
 
     def wallet_fixture(attrs \\ %{}) do
       user = insert_user()
@@ -21,9 +21,8 @@ defmodule Sportsindex.WalletsTest do
 
     test "get_user_wallets/1 returns the user's wallet" do
       {wallet, user} = wallet_fixture()
-      wallets = Wallets.get_user_wallets(user)
-      assert length(wallets) == 1
-      assert Enum.at(wallets, 0).id == wallet.id
+      user_wallet = Wallets.get_user_wallet(user)
+      assert user_wallet.id == wallet.id
     end
 
     test "get_user_wallet!/1 returns the user's wallet" do
@@ -41,7 +40,6 @@ defmodule Sportsindex.WalletsTest do
     test "create_wallet/1 with valid data creates a wallet" do
       user = insert_user()
       assert {:ok, %Wallet{} = wallet} = Wallets.create_wallet(@valid_attrs, user)
-      assert wallet.currency == Map.get(@valid_attrs, :currency)
       assert wallet.value == 42
     end
 

@@ -3,15 +3,12 @@ defmodule Sportsindex.Repo.Migrations.CreateWallets do
 
   def change do
     create table(:wallets) do
-      add :currency, :string
-      add :value, :integer
+      add :value, :integer, default: 0
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:wallets, [:user_id])
-    create index(:wallets, [:currency])
-    create unique_index(:wallets, [:user_id, :currency])
+    create unique_index(:wallets, [:user_id])
   end
 end
