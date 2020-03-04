@@ -12,35 +12,17 @@ defmodule SportsindexWeb.WalletController do
 
   def index(conn, _params, user) do
     wallet = Wallets.get_user_wallet(user)
-    render(conn, "index.json", wallets: [wallet])
+    render(conn, "show.json", wallet: wallet)
   end
 
-  def create(conn , %{"wallet" => wallet_params}, user) do
-    with {:ok, %Wallet{} = wallet} <- Wallets.create_wallet(wallet_params, user) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", wallet: wallet)
-    end
-  end
-
-  def update(conn, %{"id" => id, "wallet" => wallet_params}, _user) do
-    wallet = Wallets.get_wallet!(id)
+  @doc """
+  update the value of the wallet
+  """
+  def update(conn, %{"wallet" => wallet_params}, user) do
+    wallet = Wallets.get_user_wallet(user)
 
     with {:ok, %Wallet{} = wallet} <- Wallets.update_wallet(wallet, wallet_params) do
       render(conn, "show.json", wallet: wallet)
     end
-  end
-
-  def delete(conn, %{"id" => id}, user) do
-    wallet = Wallets.get_user_wallet!(id, user)
-    cond do
-      wallet.user.id == user.id ->
-        with {:ok, %Wallet{}} <- Wallets.delete_wallet(wallet) do
-          send_resp(conn, :no_content, "{}")
-        end
-      true ->
-        send_resp(conn, :forbidden, "")
-    end
-
   end
 end

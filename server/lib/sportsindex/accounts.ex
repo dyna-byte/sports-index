@@ -9,6 +9,7 @@ defmodule Sportsindex.Accounts do
 
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias Sportsindex.Accounts.User
+  alias Sportsindex.Wallets
 
   @doc """
   Returns the list of users.
@@ -58,12 +59,15 @@ defmodule Sportsindex.Accounts do
   end
 
   @doc """
-  Create a User and Credential and return the user
+  Create a User with email/pass credentials.
+
+  Additionally creates a wallet for the user
   """
   def create_user_creds(attrs \\ %{}) do
     Repo.transaction(fn ->
       {:ok, user} = create_user(attrs)
       {:ok, _creds} = create_credential(attrs, user)
+      {:ok, _wallet} = Wallets.create_wallet(%{}, user)
       user
     end)
   end

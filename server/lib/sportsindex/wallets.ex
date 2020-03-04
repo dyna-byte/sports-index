@@ -45,24 +45,6 @@ defmodule Sportsindex.Wallets do
   end
 
   @doc """
-  Creates a wallet.
-
-  ## Examples
-
-      iex> create_wallet(%{field: value})
-      {:ok, %Wallet{}}
-
-      iex> create_wallet(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_wallet(attrs \\ %{}, user) do
-    %Wallet{}
-    |> Wallet.changeset(attrs, user)
-    |> Repo.insert()
-  end
-
-  @doc """
   Updates a wallet.
 
   ## Examples
@@ -78,34 +60,5 @@ defmodule Sportsindex.Wallets do
     wallet
     |> Wallet.changeset(attrs)
     |> Repo.update()
-  end
-
-  @doc """
-  Deletes a wallet.
-
-  ## Examples
-
-      iex> delete_wallet(wallet)
-      {:ok, %Wallet{}}
-
-      iex> delete_wallet(wallet)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_wallet(%Wallet{} = wallet) do
-    Repo.delete(wallet)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking wallet changes.
-
-  ## Examples
-
-      iex> change_wallet(wallet)
-      %Ecto.Changeset{source: %Wallet{}}
-
-  """
-  def change_wallet(%Wallet{} = wallet) do
-    Wallet.changeset(wallet, %{})
   end
 end

@@ -14,7 +14,6 @@ defmodule Sportsindex.Wallets.Wallet do
   def changeset(wallet, attrs) do
     wallet
     |> cast(attrs, [:value])
-    |> validate_required([:value])
   end
 
   def changeset(wallet, attrs, user) do
