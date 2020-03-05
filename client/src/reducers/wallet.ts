@@ -2,7 +2,8 @@ import actionTypes from '../actionTypes';
 
 const initialState: IWalletStore = {
   loading: false,
-  wallet: null
+  wallet: null,
+  transactions: null
 };
 
 export default function sessionReducer(state = initialState, action) {
@@ -18,6 +19,16 @@ export default function sessionReducer(state = initialState, action) {
         loading: false,
         wallet: action.data
       };
+    case actionTypes.TRANSACTONS_RESQUEST:
+      return {
+        ...state,
+        transactions: null,
+      };
+    case actionTypes.TRANSACTONS:
+      return {
+        ...state,
+        transactions: action.data,
+      };
     default:
       return state;
   }
@@ -26,8 +37,14 @@ export default function sessionReducer(state = initialState, action) {
 export interface IWalletStore {
   loading: boolean;
   wallet: IWallet | null
+  transactions: ITransaction[] | null
 }
 
 export interface IWallet {
   value: number
+}
+
+export interface ITransaction {
+  amount: number,
+  source: string
 }

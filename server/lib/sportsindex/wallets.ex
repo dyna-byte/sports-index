@@ -8,6 +8,8 @@ defmodule Sportsindex.Wallets do
   alias Sportsindex.Repo
 
   alias Sportsindex.Wallets.Wallet
+  alias Sportsindex.Accounts.User
+  alias Sportsindex.Wallets.Transaction
 
   @doc """
   Returns the list of wallets.
@@ -37,10 +39,10 @@ defmodule Sportsindex.Wallets do
 
   """
   def get_wallet!(id), do: Repo.get!(Wallet, id) |> Repo.preload(:user)
-  def get_user_wallet!(id, user), do: assoc(user, :wallet) |> Repo.get!(id)
+  def get_user_wallet!(id, user), do: user_wallet(user) |> Repo.get!(id)
 
   def get_user_wallet(user) do
-    assoc(user, :wallet)
+    user_wallet(user)
     |> Repo.one()
   end
 
@@ -67,5 +69,76 @@ defmodule Sportsindex.Wallets do
     wallet
     |> Wallet.changeset(attrs)
     |> Repo.update()
+  end
+
+  alias Sportsindex.Wallets.Transaction
+
+  @doc """
+  Returns the list of transactions.
+  """
+  def list_transactions do
+    Repo.all(Transaction)
+  end
+
+  @doc """
+  Gets a single transaction.
+  """
+  def get_transaction!(id), do: Repo.get!(Transaction, id)
+
+  def get_user_transactions(user = %User{}) do
+    wallet = user_wallet(user)
+    q = from t in Transaction,
+    join: w in ^wallet,
+    where: t.wallet_id == w.id,
+    order_by: [desc: t.id],
+    select: t
+
+    Repo.all(q)
+  end
+
+  @doc """
+  Creates a transaction.
+  """
+  def create_transaction(attrs \\ %{}, wallet) do
+    %Transaction{}
+    |> Transaction.changeset(attrs, wallet)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a transaction.
+  """
+  def update_transaction(%Transaction{} = transaction, attrs) do
+    transaction
+    |> Transaction.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a transaction.
+  """
+  def delete_transaction(%Transaction{} = transaction) do
+    Repo.delete(transaction)
+  end
+
+  @doc """
+  Add amount to a user's wallet
+  """
+  def add_credit(user = %User{}, amount) when is_integer(amount) do
+    Repo.transaction(fn ->
+      wallet = get_user_wallet(user)
+      create_transaction(%{ amount: amount, source: "payment"}, wallet)
+      {:ok, wallet} = update_wallet(wallet, %{ value: wallet.value + amount})
+      wallet
+    end)
+  end
+
+  defp user_wallet(user), do: assoc(user, :wallet)
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking transaction changes.
+  """
+  def change_transaction(%Transaction{} = transaction) do
+    Transaction.changeset(transaction, %{})
   end
 end

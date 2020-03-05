@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { loadWallet, add } from '../actions/wallet';
+import { loadWallet, add, loadTransactions } from '../actions/wallet';
 import { connect } from 'react-redux';
 import { Paper, Button, Typography, makeStyles, 
-  TextField, InputAdornment, ButtonGroup, FormControl } from '@material-ui/core';
+  TextField, InputAdornment, ButtonGroup } from '@material-ui/core';
 import { IStore } from '../reducers';
 import clsx from '../tools/clsx';
+import Transactions from 'src/components/Transactions';
 
 const useStyles = makeStyles(theme => ({
   wallet: {
@@ -17,11 +18,13 @@ function Wallets(props) {
 
   useEffect(() => {
     props.loadWallet();
+    props.loadTransactions();
   }, [])
 
   const add = (amount) => props.add(amount);
 
   return (
+    <>
     <Paper className={clsx("paper", classes.wallet)}>
       <Typography variant="h5">
         Wallet
@@ -47,13 +50,16 @@ function Wallets(props) {
         : <Typography variant="h6">Loading ...</Typography>
       }
     </Paper>
+    <Transactions transactions={props.transactions} />
+    </>
   )
 }
 
 export default connect(
   ({wallet}: IStore) => ({
     loading: wallet.loading,
-    wallet: wallet.wallet
+    wallet: wallet.wallet,
+    transactions: wallet.transactions
   }),
-  { loadWallet, add }
+  { loadWallet, add, loadTransactions }
 )(Wallets);

@@ -43,5 +43,6 @@ defmodule SportsindexWeb.Router do
 
     resources "/wallets", WalletController, only: [:index, :update]
     post "/wallets/add", WalletController, :add
+    get "/wallets/transactions", WalletController, :transactions
   end
 end

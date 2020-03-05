@@ -27,10 +27,15 @@ defmodule SportsindexWeb.WalletController do
   end
 
   def add(conn, %{"amount" => amount}, user) when is_integer(amount) do
-    wallet = Wallets.get_user_wallet(user)
-
-    with {:ok, %Wallet{} = wallet} <- Wallets.update_wallet(wallet, %{ value: wallet.value + amount}) do
+    with {:ok, %Wallet{} = wallet} <- Wallets.add_credit(user, amount) do
       render(conn, "show.json", wallet: wallet)
     end
+  end
+
+  def transactions(conn, _params, user) do
+    # This can be a preload on wallet, however a seperate endpoint allows
+    # addition of filteration/pagination to the transactions list
+    transactions = Wallets.get_user_transactions(user)
+    render(conn, "index.json", transactions: transactions)
   end
 end

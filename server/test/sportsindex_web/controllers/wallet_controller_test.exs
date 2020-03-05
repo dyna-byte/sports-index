@@ -29,6 +29,11 @@ defmodule SportsindexWeb.WalletControllerTest do
       rconn = post(conn, Routes.wallet_path(conn, :add), amount: 100)
 
       assert %{ "value" => ^expected} = json_response(rconn, 200)["data"]
+
+      # check the new transaction
+      rconn = get(conn, Routes.wallet_path(conn, :transactions))
+
+      assert [%{ "amount" => 100, "source" => "PAYMENT"}] = json_response(rconn, 200)["data"]
     end
   end
 

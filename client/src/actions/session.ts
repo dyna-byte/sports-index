@@ -43,7 +43,7 @@ export function refresh(data) {
         dispatch({ type: actionTypes.LOGIN, data: response.data })
       }).catch((err) => {
         dispatch({ type: actionTypes.LOGIN_FAILURE })
-        setCurrentUser(null);
+        // setCurrentUser(null);
       });
   }
 }

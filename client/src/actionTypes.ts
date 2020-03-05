@@ -9,7 +9,9 @@ const actionTypes = {
   REFRESH_REQUEST: "",
   LOGOUT: "",
   WALLETS_REQUEST: "",
-  WALLETS: ""
+  WALLETS: "",
+  TRANSACTONS_RESQUEST: "",
+  TRANSACTONS: "",
 }
 
 for (let key in actionTypes) {
