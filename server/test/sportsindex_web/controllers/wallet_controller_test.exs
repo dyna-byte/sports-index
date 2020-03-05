@@ -23,6 +23,15 @@ defmodule SportsindexWeb.WalletControllerTest do
     end
   end
 
+  describe "add amount to wallet" do
+    test "renders wallet when adding a fixed amount", %{conn: conn, wallet: wallet} do
+      expected = wallet.value + 100
+      rconn = post(conn, Routes.wallet_path(conn, :add), amount: 100)
+
+      assert %{ "value" => ^expected} = json_response(rconn, 200)["data"]
+    end
+  end
+
   describe "update wallet" do
 
     test "renders wallet when data is valid", %{conn: conn, wallet: wallet} do

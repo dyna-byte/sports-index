@@ -25,4 +25,12 @@ defmodule SportsindexWeb.WalletController do
       render(conn, "show.json", wallet: wallet)
     end
   end
+
+  def add(conn, %{"amount" => amount}, user) when is_integer(amount) do
+    wallet = Wallets.get_user_wallet(user)
+
+    with {:ok, %Wallet{} = wallet} <- Wallets.update_wallet(wallet, %{ value: wallet.value + amount}) do
+      render(conn, "show.json", wallet: wallet)
+    end
+  end
 end

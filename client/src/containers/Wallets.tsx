@@ -1,45 +1,59 @@
-import React from 'react';
-import { signup } from '../actions/session';
+import React, { useEffect } from 'react';
+import { loadWallet, add } from '../actions/wallet';
 import { connect } from 'react-redux';
-import { Paper, Button, Typography, makeStyles, Divider } from '@material-ui/core';
-import { Form, Field } from 'react-final-form';
-import FormTextField from '../components/form/FormTextField';
-import { validator, validators } from '../tools/validation';
+import { Paper, Button, Typography, makeStyles, 
+  TextField, InputAdornment, ButtonGroup, FormControl } from '@material-ui/core';
 import { IStore } from '../reducers';
-import { Link } from 'react-router-dom';
+import clsx from '../tools/clsx';
 
 const useStyles = makeStyles(theme => ({
-  form: {
-    margin: theme.spacing(1)
-  },
-  divider: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+  wallet: {
+    marginTop: theme.spacing(2),
   }
 }))
 
 function Wallets(props) {
-  const onSubmit = data => props.signup(data)
   const classes = useStyles();
 
-  const { required, min, email } = validators;
-  const validate = validator([
-    { field: 'name', validators: [ required() ] },
-    { field: 'email', validators: [ required(), email() ] },
-    { field: 'password', validators: [ required(), min(6) ] },
-  ]);
+  useEffect(() => {
+    props.loadWallet();
+  }, [])
+
+  const add = (amount) => props.add(amount);
 
   return (
-    <Paper className="paper">
-      <h1>Wallet</h1>
+    <Paper className={clsx("paper", classes.wallet)}>
+      <Typography variant="h5">
+        Wallet
+      </Typography>
+      { !props.loading && props.wallet ?
+        <form noValidate autoComplete="off">
+          <TextField label="" margin="normal" variant="filled" disabled fullWidth
+            value={props.wallet.value}
+            size="small"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">£</InputAdornment>
+            }} />
+          <div>
+            <ButtonGroup color="primary" variant="contained" fullWidth>
+              {[10, 20, 50, 100, 200, 400, 600, 1000]
+              .map((amount) => 
+                <Button key={amount} color="primary" onClick={() => add(amount)} >Add {amount}</Button>
+              )
+              }
+            </ButtonGroup>
+          </div>
+        </form>
+        : <Typography variant="h6">Loading ...</Typography>
+      }
     </Paper>
   )
 }
 
 export default connect(
   ({wallet}: IStore) => ({
-    isLoading: wallet.loading,
-    wallets: wallet.wallets
+    loading: wallet.loading,
+    wallet: wallet.wallet
   }),
-  {  }
+  { loadWallet, add }
 )(Wallets);

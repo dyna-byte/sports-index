@@ -2,64 +2,22 @@ import actionTypes from '../actionTypes';
 
 const initialState: IWalletStore = {
   loading: false,
-  wallets: []
+  wallet: null
 };
 
 export default function sessionReducer(state = initialState, action) {
   switch(action.type) {
-    case actionTypes.LOGIN:
+    case actionTypes.WALLETS_REQUEST:
       return {
         ...state,
-        isAuthenticated: true,
-        isAuthenticating: false,
-        currentUser: action.data.user
+        loading: true,
       };
-    case actionTypes.LOGIN_REQUEST:
+    case actionTypes.WALLETS:
       return {
         ...state,
-        error: null,
-        isAuthenticated: false,
-        isAuthenticating: true
+        loading: false,
+        wallet: action.data
       };
-    case actionTypes.LOGIN_FAILURE:
-      return {
-        ...state,
-        isAuthenticated: false,
-        isAuthenticating: false,
-        error: "Failed to login"
-      };
-    case actionTypes.SIGNUP:
-      return {
-        ...state,
-        isAuthenticated: true,
-        currentUser: action.data.user
-      };
-    case actionTypes.SIGNUP_REQUEST:
-      return {
-        ...state,
-        error: null,
-        isAuthenticated: false,
-        isAuthenticating: true
-      };
-    case actionTypes.SIGNUP_FAILURE:
-      return {
-        ...state,
-        isAuthenticated: false,
-        isAuthenticating: false,
-        error: "Failed to signup"
-      };
-    case actionTypes.REFRESH_REQUEST:
-      return {
-        ...state,
-        error: null,
-        isAuthenticated: false,
-        isAuthenticating: true
-      };
-    case actionTypes.LOGOUT:
-      return {
-        ...state,
-        ...initialState
-      }
     default:
       return state;
   }
@@ -67,10 +25,9 @@ export default function sessionReducer(state = initialState, action) {
 
 export interface IWalletStore {
   loading: boolean;
-  wallets: IWallet[]
+  wallet: IWallet | null
 }
 
 export interface IWallet {
-  currency: string,
   value: number
 }

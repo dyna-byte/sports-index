@@ -42,5 +42,6 @@ defmodule SportsindexWeb.Router do
     get "/sessions/refresh", SessionController, :refresh
 
     resources "/wallets", WalletController, only: [:index, :update]
+    post "/wallets/add", WalletController, :add
   end
 end
