@@ -33,7 +33,6 @@ function Transactions(props) {
         ? <Typography variant="h6">Loading ...</Typography>
         : transactions.length < 1 
         ? <Typography variant="h6">No Transactions found!</Typography>
-
         :
         <>
           <TableContainer className={classes.tableContainer}>
