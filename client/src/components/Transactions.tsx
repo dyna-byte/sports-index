@@ -10,6 +10,12 @@ const useStyles = makeStyles(theme => ({
   },
   tableContainer: {
     maxHeight: 500
+  },
+  positive: {
+    color: 'green'
+  },
+  negative: {
+    color: 'red'
   }
 }))
 
@@ -21,7 +27,10 @@ function Transactions(props) {
     {id: 'id', label: 'ID' },
     {id: 'inserted_at', label: 'Date' },
     {id: 'source', label: 'Source' },
-    {id: 'amount', label: 'Amount', align: 'right', format: (value: number) => `£${value.toLocaleString()}` },
+    {id: 'amount', label: 'Amount', align: 'right',
+     format: (value: number) => `£${value.toLocaleString()}`,
+     classes: (value: number) => value > 0 ? classes.positive : classes.negative
+     },
   ];
 
   return (
@@ -46,9 +55,10 @@ function Transactions(props) {
               </TableHead>
               <TableBody>
                 {transactions.map(t => (
-                  <TableRow hover key={t.id}>
+                  <TableRow hover key={t.id} >
                     {cols.map(col => (
-                      <TableCell key={col.id} align={col.align as any}>
+                      <TableCell key={col.id} align={col.align as any}
+                       {...(col.classes && {className: col.classes(t[col.id])})}>
                         {col.format ? col.format(t[col.id]) : t[col.id]}
                       </TableCell>
                     ))}
