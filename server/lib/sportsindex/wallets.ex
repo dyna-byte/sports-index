@@ -127,10 +127,18 @@ defmodule Sportsindex.Wallets do
   def add_credit(user = %User{}, amount) when is_integer(amount) do
     Repo.transaction(fn ->
       wallet = get_user_wallet(user)
-      create_transaction(%{ amount: amount, source: "payment"}, wallet)
+      {:ok, _} = create_transaction(%{ amount: amount, source: "payment"}, wallet)
       {:ok, wallet} = update_wallet(wallet, %{ value: wallet.value + amount})
       wallet
     end)
+  end
+
+  def recalculate_from_transactions(user = %User{}) do
+    balance = get_user_transactions(user)
+    |> Enum.reduce(0, fn transaction, total -> total + transaction.amount end)
+
+    get_user_wallet(user)
+    |> update_wallet(%{ value: balance })
   end
 
   defp user_wallet(user), do: assoc(user, :wallet)
