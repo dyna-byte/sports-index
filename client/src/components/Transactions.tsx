@@ -12,10 +12,18 @@ const useStyles = makeStyles(theme => ({
     maxHeight: 500
   },
   positive: {
-    color: 'green'
+    color: 'green',
+    '&:after': {
+      content: '"\\25B2"',
+      paddingLeft: theme.spacing(1)
+    }
   },
   negative: {
-    color: 'red'
+    color: 'red',
+    '&:after': {
+      content: '"\\25BC"',
+      paddingLeft: theme.spacing(1)
+    }
   }
 }))
 

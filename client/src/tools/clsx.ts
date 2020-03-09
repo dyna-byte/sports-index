@@ -2,7 +2,6 @@
  * Construct class names conditionally
  */
 export default function clsx(...args: any[]): string {
-  console.log(args);
   return args
   .flatMap(transformArg)
   .filter(a => a)
