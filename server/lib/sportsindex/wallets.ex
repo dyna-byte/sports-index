@@ -86,10 +86,9 @@ defmodule Sportsindex.Wallets do
   def get_transaction!(id), do: Repo.get!(Transaction, id)
 
   def get_user_transactions(user = %User{}) do
-    wallet = user_wallet(user)
     q = from t in Transaction,
-    join: w in ^wallet,
-    where: t.wallet_id == w.id,
+    join: w in assoc(t, :wallet),
+    on: w.user_id == ^user.id,
     order_by: [desc: t.id],
     select: t
 
