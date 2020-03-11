@@ -6,8 +6,6 @@ import api from "./api";
  */
 export function loadWallet() {
   return dispatch => {
-    dispatch({ type: actionTypes.WALLETS_REQUEST });
-
     return api.get('api/wallets')
       .then(async (response) => {
         dispatch({ type: actionTypes.WALLETS, data: response.data })
@@ -20,8 +18,6 @@ export function loadWallet() {
  */
 export function loadTransactions() {
   return dispatch => {
-    dispatch({ type: actionTypes.TRANSACTONS_RESQUEST });
-
     return api.get('api/wallets/transactions')
       .then(async (response) => {
         dispatch({ type: actionTypes.TRANSACTONS, data: response.data })
@@ -35,8 +31,6 @@ export function loadTransactions() {
  */
 export function add(amount) {
   return dispatch => {
-    dispatch({ type: actionTypes.WALLETS_REQUEST });
-
     return api.post('api/wallets/add', { amount })
       .then(async (response) => {
         dispatch({ type: actionTypes.WALLETS, data: response.data })

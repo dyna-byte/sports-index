@@ -8,9 +8,7 @@ const actionTypes = {
   SIGNUP_FAILURE: "",
   REFRESH_REQUEST: "",
   LOGOUT: "",
-  WALLETS_REQUEST: "",
   WALLETS: "",
-  TRANSACTONS_RESQUEST: "",
   TRANSACTONS: "",
 }
 
