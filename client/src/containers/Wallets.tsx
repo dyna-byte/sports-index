@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { loadWallet, add, loadTransactions } from '../actions/wallet';
 import { connect } from 'react-redux';
 import { Paper, Button, Typography, makeStyles, 
@@ -6,6 +6,8 @@ import { Paper, Button, Typography, makeStyles,
 import { IStore } from '../reducers';
 import clsx from '../tools/clsx';
 import Transactions from 'src/components/Transactions';
+import useMount from 'src/hooks/useMount';
+import Loading from 'src/components/progress/Loading';
 
 const useStyles = makeStyles(theme => ({
   wallet: {
@@ -16,10 +18,12 @@ const useStyles = makeStyles(theme => ({
 function Wallets(props) {
   const classes = useStyles();
 
-  useEffect(() => {
-    props.loadWallet();
-    props.loadTransactions();
-  }, [])
+  const { isLoading } = useMount(() =>
+    Promise.all([
+      props.loadWallet(),
+      props.loadTransactions(),
+    ])
+  )
 
   const add = (amount) => props.add(amount);
 
@@ -29,7 +33,7 @@ function Wallets(props) {
       <Typography variant="h5">
         Wallet
       </Typography>
-      { !props.loading && props.wallet ?
+      { !isLoading && props.wallet ?
         <form noValidate autoComplete="off">
           <TextField label="" margin="normal" variant="filled" disabled fullWidth
             value={props.wallet.value}
@@ -47,7 +51,7 @@ function Wallets(props) {
             </ButtonGroup>
           </div>
         </form>
-        : <Typography variant="h6">Loading ...</Typography>
+        : <Loading />
       }
     </Paper>
     <Transactions transactions={props.transactions} />
@@ -57,7 +61,6 @@ function Wallets(props) {
 
 export default connect(
   ({wallet}: IStore) => ({
-    loading: wallet.loading,
     wallet: wallet.wallet,
     transactions: wallet.transactions
   }),

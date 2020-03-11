@@ -11,8 +11,6 @@ export function loadWallet() {
     return api.get('api/wallets')
       .then(async (response) => {
         dispatch({ type: actionTypes.WALLETS, data: response.data })
-      }).catch((err) => {
-        console.error("Failed to load wallets", err);
       });
   }
 }
@@ -27,8 +25,6 @@ export function loadTransactions() {
     return api.get('api/wallets/transactions')
       .then(async (response) => {
         dispatch({ type: actionTypes.TRANSACTONS, data: response.data })
-      }).catch((err) => {
-        console.error("Failed to load wallets", err);
       });
   }
 }
@@ -47,8 +43,6 @@ export function add(amount) {
 
         // re-load transactions
         dispatch(loadTransactions());
-      }).catch((err) => {
-        console.error("Failed to load wallets", err);
       });
   }
 }

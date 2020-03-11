@@ -3,6 +3,7 @@ import { Paper, Typography, makeStyles,
   TableContainer, Table, TableHead, TableRow,
    TableCell, TableBody } from '@material-ui/core';
 import clsx from '../tools/clsx';
+import Loading from './progress/Loading';
 
 const useStyles = makeStyles(theme => ({
   transaction: {
@@ -47,7 +48,7 @@ function Transactions(props) {
         Transactions
       </Typography>
       { !transactions 
-        ? <Typography variant="h6">Loading ...</Typography>
+        ? <Loading />
         : transactions.length < 1 
         ? <Typography variant="h6">No Transactions found!</Typography>
         :
